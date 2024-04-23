@@ -1,35 +1,65 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import { ContactList } from "./components/ContactList/ContactList";
+import { Filter } from "./components/Filter/Filter";
+import { Phonebook } from "./components/Phonebook/Phonebook";
+import { INITIAL_DATA } from "./constanses/INITIAL_DATA";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const [contacts, setContacts] = useState([]);
+  const [filteredContacts, setFilteredContacts] = useState([]);
+  const [data, setData] = useState(INITIAL_DATA);
+  const [filter, setFilter] = useState("");
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "filter") {
+      setFilter(value);
+    }
+    setData((prev) => {
+      if (name === "filter") {
+        return { name, ...prev };
+      } else {
+        return { ...prev, [name]: value };
+      }
+    });
+  };
+
+  useEffect(() => {
+    const data = window.localStorage.getItem("contacts");
+    if (data !== null) setContacts(JSON.parse(data));
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem("contacts", JSON.stringify(contacts));
+  }, [contacts]);
+
+  useEffect(() => {
+    setFilteredContacts(
+      contacts.filter((contact) =>
+        contact.name.toLowerCase().includes(filter.toLowerCase()),
+      ),
+    );
+  }, [contacts, filter]);
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <h1>Phonebook</h1>
+      <Phonebook
+        contacts={contacts}
+        data={data}
+        setContacts={setContacts}
+        handleChange={handleChange}
+      />
+      <h2>Filter</h2>
+      <Filter filter={filter} handleChange={handleChange} />
+      <h1>Contact List</h1>
+      <ContactList
+        contacts={contacts}
+        setContacts={setContacts}
+        filteredContacts={filteredContacts}
+      />
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;
