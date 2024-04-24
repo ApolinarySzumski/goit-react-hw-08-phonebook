@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import { ContactList } from "./components/ContactList/ContactList";
-import { Filter } from "./components/Filter/Filter";
-import { Phonebook } from "./components/Phonebook/Phonebook";
+import { ContactList } from "./components/ContactList";
+import { Filter } from "./components/Filter";
+import { Header } from "./components/Header";
+import { Phonebook } from "./components/Phonebook";
+import { Wrapper } from "./components/Wrapper";
 import { INITIAL_DATA } from "./constanses/INITIAL_DATA";
 
 const App = () => {
@@ -42,23 +44,23 @@ const App = () => {
   }, [contacts, filter]);
 
   return (
-    <>
-      <h1>Phonebook</h1>
+    <Wrapper>
+      <Header text="Phonebook" />
       <Phonebook
         contacts={contacts}
         data={data}
         setContacts={setContacts}
         handleChange={handleChange}
       />
-      <h2>Filter</h2>
+      <Header text="Filter" />
       <Filter filter={filter} handleChange={handleChange} />
-      <h1>Contact List</h1>
+      <Header text="Contact List" />
       <ContactList
         contacts={contacts}
         setContacts={setContacts}
         filteredContacts={filteredContacts}
       />
-    </>
+    </Wrapper>
   );
 };
 

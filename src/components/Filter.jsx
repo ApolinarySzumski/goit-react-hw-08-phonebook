@@ -1,10 +1,11 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
+import { Input, Paragraph } from "../StyledComponents/Filter";
 
 export const Filter = ({ filter, handleChange }) => {
   return (
     <>
-      <p>Find contacts by name</p>
-      <input
+      <Paragraph>Find contacts by name</Paragraph>
+      <Input
         type="text"
         name="filter"
         value={filter}
