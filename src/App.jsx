@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
+import { StyledHeader } from "./StyledComponents/Header";
 import { ContactList } from "./components/ContactList";
 import { Filter } from "./components/Filter";
-import { Header } from "./components/Header";
 import { Phonebook } from "./components/Phonebook";
 import { Wrapper } from "./components/Wrapper";
 import { INITIAL_DATA } from "./constanses/INITIAL_DATA";
@@ -45,16 +45,11 @@ const App = () => {
 
   return (
     <Wrapper>
-      <Header />
-      <Phonebook
-        contacts={contacts}
-        data={data}
-        setContacts={setContacts}
-        handleChange={handleChange}
-      />
-      <Header text="Filter" />
+      <StyledHeader>Phonebook</StyledHeader>
+      <Phonebook />
+      <StyledHeader>Filter</StyledHeader>
       <Filter filter={filter} handleChange={handleChange} />
-      <Header text="Contact List" />
+      <StyledHeader>Contact List</StyledHeader>
       <ContactList
         contacts={contacts}
         setContacts={setContacts}
