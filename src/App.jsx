@@ -48,13 +48,9 @@ const App = () => {
       <StyledHeader>Phonebook</StyledHeader>
       <Phonebook />
       <StyledHeader>Filter</StyledHeader>
-      <Filter filter={filter} handleChange={handleChange} />
+      <Filter />
       <StyledHeader>Contact List</StyledHeader>
-      <ContactList
-        contacts={contacts}
-        setContacts={setContacts}
-        filteredContacts={filteredContacts}
-      />
+      <ContactList />
     </Wrapper>
   );
 };

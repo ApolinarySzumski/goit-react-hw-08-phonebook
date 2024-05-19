@@ -1,17 +1,11 @@
 import PropTypes from "prop-types";
 import { Input, Paragraph } from "../StyledComponents/Filter";
 
-export const Filter = ({ filter, handleChange }) => {
+export const Filter = () => {
   return (
     <>
       <Paragraph>Find contacts by name</Paragraph>
-      <Input
-        type="text"
-        name="filter"
-        value={filter}
-        title="Find contacts by name"
-        onChange={handleChange}
-      />
+      <Input type="text" name="filter" title="Find contacts by name" />
     </>
   );
 };

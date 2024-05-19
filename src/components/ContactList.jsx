@@ -1,20 +1,21 @@
 import { nanoid } from "nanoid";
 import PropTypes from "prop-types";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Button,
   List,
   ListItem,
   Paragraph,
 } from "../StyledComponents/ContactList";
+import { deleteContact } from "../redux/contactsSlice";
 import { getContacts } from "../redux/selectors";
 
 export const ContactList = () => {
-  // const handleDelete = (contactToDelete) => {
-  //   setContacts(contacts.filter((contact) => contact !== contactToDelete));
-  // };
-  // onClick={() => handleDelete(contact)}
+  const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
+
+  const handleDelete = (contactId) => dispatch(deleteContact(contactId));
+
   return (
     <>
       <List>
@@ -23,7 +24,7 @@ export const ContactList = () => {
             <Paragraph>
               {contact.name}: {contact.number}
             </Paragraph>
-            <Button>Delete</Button>
+            <Button onClick={() => handleDelete(contact.id)}>Delete</Button>
           </ListItem>
         ))}
       </List>
