@@ -1,7 +1,10 @@
 import PropTypes from "prop-types";
 import { Button, Form, Input, Label } from "../StyledComponents/Phonebook";
+import { useDispatch } from "react-redux";
 
 export const Phonebook = ({ contacts, data, setContacts, handleChange }) => {
+  const dispatch = useDispatch();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (contacts.find((contact) => contact.name === data.name) === undefined) {
