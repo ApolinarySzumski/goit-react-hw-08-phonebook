@@ -45,7 +45,7 @@ const App = () => {
 
   return (
     <Wrapper>
-      <Header text="Phonebook" />
+      <Header />
       <Phonebook
         contacts={contacts}
         data={data}
