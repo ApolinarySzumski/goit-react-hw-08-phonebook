@@ -11,13 +11,18 @@ import { getContacts } from "./redux/selectors";
 const App = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
-  console.log(contacts);
 
   useEffect(() => {
     const data = window.localStorage.getItem("contacts");
-    if (data !== null) dispatch(loadContacts(JSON.parse(data)));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (data) {
+      try {
+        const parsedData = JSON.parse(data);
+        dispatch(loadContacts(parsedData));
+      } catch (error) {
+        console.error("Failed to parse contacts from localStorage", error);
+      }
+    }
+  }, [dispatch]);
 
   useEffect(() => {
     window.localStorage.setItem("contacts", JSON.stringify(contacts));
