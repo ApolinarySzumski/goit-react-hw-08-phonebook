@@ -8,25 +8,31 @@ import {
   Paragraph,
 } from "../StyledComponents/ContactList";
 import { deleteContact } from "../redux/contactsSlice";
-import { getContacts } from "../redux/selectors";
+import { getContacts, getFilter } from "../redux/selectors";
 
 export const ContactList = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
+  const filterSelector = useSelector(getFilter);
+  const filterValue = filterSelector.filter;
 
   const handleDelete = (contactId) => dispatch(deleteContact(contactId));
 
   return (
     <>
       <List>
-        {contacts.map((contact) => (
-          <ListItem key={nanoid()}>
-            <Paragraph>
-              {contact.name}: {contact.number}
-            </Paragraph>
-            <Button onClick={() => handleDelete(contact.id)}>Delete</Button>
-          </ListItem>
-        ))}
+        {contacts
+          .filter((contact) =>
+            contact.name.toLowerCase().includes(filterValue.toLowerCase()),
+          )
+          .map((contact) => (
+            <ListItem key={nanoid()}>
+              <Paragraph>
+                {contact.name}: {contact.number}
+              </Paragraph>
+              <Button onClick={() => handleDelete(contact.id)}>Delete</Button>
+            </ListItem>
+          ))}
       </List>
     </>
   );

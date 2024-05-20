@@ -14,12 +14,6 @@ export const Phonebook = () => {
     if (contacts.some((contact) => contact.name === name.value) === true)
       alert(`${name.value} is already in contact list`);
     else dispatch(addContact(name.value, number.value));
-
-    // if (contacts.find((contact) => contact.name === data.name) === undefined) {
-    //   setContacts([...contacts, data]);
-    // } else {
-    //   alert(`${e.target[0].value} is already in contact list`);
-    // }
   };
 
   return (

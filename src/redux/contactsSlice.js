@@ -4,7 +4,7 @@ const contactsInitialState = [
   {
     id: nanoid(),
     name: "Apolinary Szumski",
-    number: "555",
+    number: "555 555 555",
   },
 ];
 
@@ -30,8 +30,12 @@ const contactsSlice = createSlice({
       const index = state.findIndex((contact) => contact.id === action.payload);
       state.splice(index, 1);
     },
+    loadContacts(state, action) {
+      state = action.payload;
+    },
   },
 });
 
-export const { addContact, deleteContact } = contactsSlice.actions;
+export const { addContact, deleteContact, loadContacts } =
+  contactsSlice.actions;
 export const contactsReducer = contactsSlice.reducer;

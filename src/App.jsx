@@ -1,47 +1,25 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { StyledHeader } from "./StyledComponents/Header";
 import { ContactList } from "./components/ContactList";
 import { Filter } from "./components/Filter";
 import { Phonebook } from "./components/Phonebook";
 import { Wrapper } from "./components/Wrapper";
-import { INITIAL_DATA } from "./constanses/INITIAL_DATA";
+import { loadContacts } from "./redux/contactsSlice";
+import { getContacts } from "./redux/selectors";
 
 const App = () => {
-  const [contacts, setContacts] = useState([]);
-  const [filteredContacts, setFilteredContacts] = useState([]);
-  const [data, setData] = useState(INITIAL_DATA);
-  const [filter, setFilter] = useState("");
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    if (name === "filter") {
-      setFilter(value);
-    }
-    setData((prev) => {
-      if (name === "filter") {
-        return { name, ...prev };
-      } else {
-        return { ...prev, [name]: value };
-      }
-    });
-  };
+  const dispatch = useDispatch();
+  const contacts = useSelector(getContacts);
 
   useEffect(() => {
     const data = window.localStorage.getItem("contacts");
-    if (data !== null) setContacts(JSON.parse(data));
-  }, []);
+    if (data !== null) dispatch(loadContacts(JSON.parse(data)));
+  }, [dispatch]);
 
   useEffect(() => {
     window.localStorage.setItem("contacts", JSON.stringify(contacts));
   }, [contacts]);
-
-  useEffect(() => {
-    setFilteredContacts(
-      contacts.filter((contact) =>
-        contact.name.toLowerCase().includes(filter.toLowerCase()),
-      ),
-    );
-  }, [contacts, filter]);
 
   return (
     <Wrapper>
