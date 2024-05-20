@@ -13,8 +13,10 @@ const App = () => {
   const contacts = useSelector(getContacts);
 
   useEffect(() => {
-    dispatch(loadContacts(JSON.parse(data)));
-  }, [dispatch]);
+    const data = window.localStorage.getItem("contacts");
+    if (data !== null) dispatch(loadContacts(JSON.parse(data)));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     window.localStorage.setItem("contacts", JSON.stringify(contacts));
