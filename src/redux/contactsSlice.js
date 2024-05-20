@@ -31,7 +31,8 @@ const contactsSlice = createSlice({
       state.splice(index, 1);
     },
     loadContacts(state, action) {
-      state = action.payload;
+      const data = window.localStorage.getItem("contacts");
+      if (data !== null) state = action.payload;
     },
   },
 });

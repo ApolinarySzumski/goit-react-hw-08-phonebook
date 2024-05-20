@@ -13,8 +13,7 @@ const App = () => {
   const contacts = useSelector(getContacts);
 
   useEffect(() => {
-    const data = window.localStorage.getItem("contacts");
-    if (data !== null) dispatch(loadContacts(JSON.parse(data)));
+    dispatch(loadContacts(JSON.parse(data)));
   }, [dispatch]);
 
   useEffect(() => {
