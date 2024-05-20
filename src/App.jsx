@@ -11,6 +11,7 @@ import { getContacts } from "./redux/selectors";
 const App = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
+  console.log(contacts);
 
   useEffect(() => {
     const data = window.localStorage.getItem("contacts");

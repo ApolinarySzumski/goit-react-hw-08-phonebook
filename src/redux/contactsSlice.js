@@ -31,7 +31,7 @@ const contactsSlice = createSlice({
       state.splice(index, 1);
     },
     loadContacts(state, action) {
-      state = action.payload;
+      [...state, action.payload];
     },
   },
 });
