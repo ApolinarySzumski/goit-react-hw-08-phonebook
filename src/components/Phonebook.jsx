@@ -1,18 +1,23 @@
 import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Form, Input, Label } from "../StyledComponents/Phonebook";
+import { addContact } from "../redux/api";
+import { getContacts } from "../redux/selectors";
 
 export const Phonebook = () => {
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   const { name, number } = e.target.elements;
-  //   if (contacts.some((contact) => contact.name === name.value) === true)
-  //     alert(`${name.value} is already in contact list`);
-  //   else dispatch(addContact(name.value, number.value));
-  // };
+  const dispatch = useDispatch();
+  const contacts = useSelector(getContacts);
 
-  //onSubmit={handleSubmit}
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const { name, number } = e.target.elements;
+    if (contacts.some((contact) => contact.name === name.value) === true)
+      alert(`${name.value} is already in contact list`);
+    else dispatch(addContact({ name: name.value, phone: number.value }));
+  };
+
   return (
-    <Form>
+    <Form onSubmit={handleSubmit}>
       <Label>Name</Label>
       <Input
         type="text"

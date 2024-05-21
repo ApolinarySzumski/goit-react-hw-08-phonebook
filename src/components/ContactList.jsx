@@ -1,29 +1,30 @@
 import { nanoid } from "nanoid";
 import PropTypes from "prop-types";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Button,
   List,
   ListItem,
   Paragraph,
 } from "../StyledComponents/ContactList";
-import { getContacts } from "../redux/selectors";
+import { deleteContact } from "../redux/api";
+import { getContacts, getFilter } from "../redux/selectors";
 
 export const ContactList = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
-  // const filterSelector = useSelector(getFilter);
-  // const filterValue = filterSelector.filter;
+  const filterSelector = useSelector(getFilter);
+  const filterValue = filterSelector.filter;
 
-  // const handleDelete = (contactId) => dispatch(deleteContact(contactId));
+  const handleDelete = (contactId) => dispatch(deleteContact(contactId));
 
   return (
     <>
       <List>
         {contacts
-          // .filter((contact) =>
-          //   contact.name.toLowerCase().includes(filterValue.toLowerCase()),
-          // )
+          .filter((contact) =>
+            contact.name.toLowerCase().includes(filterValue.toLowerCase()),
+          )
           .map((contact) => (
             <ListItem key={nanoid()}>
               <Paragraph>

@@ -37,12 +37,15 @@ const contactsSlice = createSlice({
       .addCase(addContact.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
-        state.items = [...state.items, action.payload];
+        state.items.push(action.payload);
       })
       .addCase(deleteContact.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
-        state.items.filter((item) => item.id === action.payload);
+        const index = state.items.findIndex(
+          (item) => item.id === action.payload.id,
+        );
+        state.items.splice(index, 1);
       })
       .addMatcher(isPendingAction, handlePending)
       .addMatcher(isRejectAction, handleRejected)

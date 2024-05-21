@@ -4,17 +4,16 @@ import { Input, Paragraph } from "../StyledComponents/Filter";
 import { addFilter } from "../redux/filterSlice";
 
 export const Filter = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  // const handleChange = (e) => {
-  //   dispatch(addFilter(e.target.value));
-  // };
+  const handleChange = (e) => {
+    dispatch(addFilter(e.target.value));
+  };
 
-  // onChange={handleChange}
   return (
     <>
       <Paragraph>Find contacts by name</Paragraph>
-      <Input type="text" name="filter" />
+      <Input type="text" name="filter" onChange={handleChange} />
     </>
   );
 };
