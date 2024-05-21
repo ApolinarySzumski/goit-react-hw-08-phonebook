@@ -5,28 +5,17 @@ import { ContactList } from "./components/ContactList";
 import { Filter } from "./components/Filter";
 import { Phonebook } from "./components/Phonebook";
 import { Wrapper } from "./components/Wrapper";
-import { loadContacts } from "./redux/contactsSlice";
-import { getContacts } from "./redux/selectors";
+import { fetchContacts } from "./redux/api";
+import { getError, getIsLoading } from "./redux/selectors";
 
 const App = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(getContacts);
+  const isLoading = useSelector(getIsLoading);
+  const error = useSelector(getError);
 
   useEffect(() => {
-    const data = window.localStorage.getItem("contacts");
-    if (data) {
-      try {
-        const parsedData = JSON.parse(data);
-        dispatch(loadContacts(parsedData));
-      } catch (error) {
-        console.error("Failed to parse contacts from localStorage", error);
-      }
-    }
+    dispatch(fetchContacts());
   }, [dispatch]);
-
-  useEffect(() => {
-    window.localStorage.setItem("contacts", JSON.stringify(contacts));
-  }, [contacts]);
 
   return (
     <Wrapper>
@@ -35,6 +24,7 @@ const App = () => {
       <StyledHeader>Filter</StyledHeader>
       <Filter />
       <StyledHeader>Contact List</StyledHeader>
+      {!isLoading && !error && <b>Request in progress...</b>}
       <ContactList />
     </Wrapper>
   );
