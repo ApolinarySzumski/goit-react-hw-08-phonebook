@@ -13,7 +13,7 @@ export const ListItem = styled.li`
   display: flex;
   align-items: center;
   justify-content: center;
-  max-width: 1000px;
+  width: 500px;
   height: 80px;
   color: inherit;
   background-color: #153448;

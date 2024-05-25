@@ -28,7 +28,7 @@ export const ContactList = () => {
           .map((contact) => (
             <ListItem key={nanoid()}>
               <Paragraph>
-                {contact.name}: {contact.number}
+                {contact.name}: {contact.phone}
               </Paragraph>
               <Button onClick={() => handleDelete(contact.id)}>Delete</Button>
             </ListItem>
