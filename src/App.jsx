@@ -13,7 +13,6 @@ const App = () => {
   const isLoading = useSelector(getIsLoading);
   const error = useSelector(getError);
 
-  // fetch contacts on mount
   useEffect(() => {
     dispatch(fetchContacts());
   }, [dispatch]);
