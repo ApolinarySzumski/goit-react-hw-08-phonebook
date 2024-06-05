@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Form, Input, Label } from "../StyledComponents/Phonebook";
-import { addContact } from "../redux/api";
-import { getContacts } from "../redux/selectors";
+import { addContact } from "../redux/appTasks/api";
+import { getContacts } from "../redux/appTasks/selectors";
 
 export const Phonebook = () => {
   const dispatch = useDispatch();

@@ -7,8 +7,8 @@ import {
   ListItem,
   Paragraph,
 } from "../StyledComponents/ContactList";
-import { deleteContact } from "../redux/api";
-import { getContacts, getFilter } from "../redux/selectors";
+import { deleteContact } from "../redux/appTasks/api";
+import { getContacts, getFilter } from "../redux/appTasks/selectors";
 
 export const ContactList = () => {
   const dispatch = useDispatch();

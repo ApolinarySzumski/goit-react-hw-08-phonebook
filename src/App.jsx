@@ -1,32 +1,43 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { StyledHeader } from "./StyledComponents/Header";
-import { ContactList } from "./components/ContactList";
-import { Filter } from "./components/Filter";
-import { Phonebook } from "./components/Phonebook";
-import { Wrapper } from "./components/Wrapper";
-import { fetchContacts } from "./redux/api";
-import { getError, getIsLoading } from "./redux/selectors";
+import { useDispatch } from "react-redux";
+import { Route, Routes } from "react-router-dom";
+import AppContent from "./components/AppContent";
+import Home from "./components/Home";
+import PrivateRoute from "./components/PrivateRoute";
+import Register from "./components/Register";
+import RestricredRoute from "./components/RestrictedRoute";
+import { useAuth } from "./hooks/useAuth";
+import { refreshUser } from "./redux/auth/api";
 
 const App = () => {
   const dispatch = useDispatch();
-  const isLoading = useSelector(getIsLoading);
-  const error = useSelector(getError);
+  const { isRefreshing, user } = useAuth();
+
+  console.log(user);
 
   useEffect(() => {
-    dispatch(fetchContacts());
+    dispatch(refreshUser());
   }, [dispatch]);
 
-  return (
-    <Wrapper>
-      <StyledHeader>Phonebook</StyledHeader>
-      <Phonebook />
-      <StyledHeader>Filter</StyledHeader>
-      <Filter />
-      <StyledHeader>Contact List</StyledHeader>
-      {isLoading && !error && <b>Request in progress...</b>}
-      <ContactList />
-    </Wrapper>
+  return isRefreshing ? (
+    <b>Refreshing User...</b>
+  ) : (
+    <Routes>
+      <Route
+        path="/"
+        element={<RestricredRoute redirectTo="/" component={<Home />} />}
+      />
+      <Route
+        path="/register"
+        element={<RestricredRoute redirectTo="/" component={<Register />} />}
+      />
+      <Route
+        path="/phonebook"
+        element={
+          <PrivateRoute redirectTo="/phonebook" component={<AppContent />} />
+        }
+      />
+    </Routes>
   );
 };
 

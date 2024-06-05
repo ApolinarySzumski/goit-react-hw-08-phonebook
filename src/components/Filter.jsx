@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { Input, Paragraph } from "../StyledComponents/Filter";
-import { addFilter } from "../redux/filterSlice";
+import { addFilter } from "../redux/appTasks/filterSlice";
 
 export const Filter = () => {
   const dispatch = useDispatch();
