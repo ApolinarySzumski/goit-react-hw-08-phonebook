@@ -1,24 +1,24 @@
-import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
-import { Input, Paragraph } from "../StyledComponents/Filter";
-import { addFilter } from "../redux/appTasks/filterSlice";
+import FilterStyles from "../StyledComponents/FilterStyles";
+import { setSearchBy } from "../redux/contacts/filtersSlice";
 
-export const Filter = () => {
+const Filter = () => {
   const dispatch = useDispatch();
 
-  const handleChange = (e) => {
-    dispatch(addFilter(e.target.value));
+  const handleFilterChange = (e) => {
+    const value = e.target.value;
+    dispatch(setSearchBy(value));
   };
 
   return (
-    <>
-      <Paragraph>Find contacts by name</Paragraph>
-      <Input type="text" name="filter" onChange={handleChange} />
-    </>
+    <FilterStyles>
+      <input
+        type="text"
+        onChange={handleFilterChange}
+        placeholder="Search..."
+      />
+    </FilterStyles>
   );
 };
 
-Filter.propTypes = {
-  filter: PropTypes.string,
-  handleChange: PropTypes.func,
-};
+export default Filter;

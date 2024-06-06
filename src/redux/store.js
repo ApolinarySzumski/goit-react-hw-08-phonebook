@@ -3,16 +3,16 @@ import {
   FLUSH,
   PAUSE,
   PERSIST,
+  persistReducer,
+  persistStore,
   PURGE,
   REGISTER,
   REHYDRATE,
-  persistReducer,
-  persistStore,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import { contactsReducer } from "./appTasks/contactsSlice";
-import { filterReducer } from "./appTasks/filterSlice";
 import { authReducer } from "./auth/slice";
+import { contactsReducer } from "./contacts/contactsSlice";
+import { filtersReducer } from "./contacts/filtersSlice";
 
 const authPersistConfig = {
   key: "auth",
@@ -22,9 +22,9 @@ const authPersistConfig = {
 
 export const store = configureStore({
   reducer: {
-    contacts: contactsReducer,
-    filter: filterReducer,
     auth: persistReducer(authPersistConfig, authReducer),
+    contacts: contactsReducer,
+    filters: filtersReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -32,7 +32,7 @@ export const store = configureStore({
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }),
-  // devTools: process.env.NODE_ENV === "development",
+  devTools: process.env.NODE_ENV === "development",
 });
 
 export const persistor = persistStore(store);

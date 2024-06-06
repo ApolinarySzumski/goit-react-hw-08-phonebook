@@ -1,45 +1,28 @@
-import { nanoid } from "nanoid";
-import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Button,
-  List,
-  ListItem,
-  Paragraph,
-} from "../StyledComponents/ContactList";
-import { deleteContact } from "../redux/appTasks/api";
-import { getContacts, getFilter } from "../redux/appTasks/selectors";
+import ContactListStyles from "../StyledComponents/ContactListStyles";
+import { deleteContact } from "../redux/contacts/api";
+import { searchByContact } from "../redux/contacts/selectors";
 
 export const ContactList = () => {
+  const contacts = useSelector(searchByContact);
   const dispatch = useDispatch();
-  const contacts = useSelector(getContacts);
-  const filterSelector = useSelector(getFilter);
-  const filterValue = filterSelector.filter;
-
-  const handleDelete = (contactId) => dispatch(deleteContact(contactId));
 
   return (
-    <>
-      <List>
-        {contacts
-          .filter((contact) =>
-            contact.name.toLowerCase().includes(filterValue.toLowerCase()),
-          )
-          .map((contact) => (
-            <ListItem key={nanoid()}>
-              <Paragraph>
-                {contact.name}: {contact.phone}
-              </Paragraph>
-              <Button onClick={() => handleDelete(contact.id)}>Delete</Button>
-            </ListItem>
-          ))}
-      </List>
-    </>
-  );
-};
+    <ContactListStyles>
+      <ul>
+        {contacts.map((contact) => (
+          <li key={contact.id}>
+            <div>
+              <span>{contact.name}</span>
+              <span>{contact.number}</span>
+            </div>
 
-ContactList.propTypes = {
-  contacts: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
-  setContacts: PropTypes.func,
-  filteredContacts: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
+            <button onClick={() => dispatch(deleteContact(contact.id))}>
+              <span>Delete contact</span>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </ContactListStyles>
+  );
 };
