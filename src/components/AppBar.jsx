@@ -7,6 +7,7 @@ const styles = {
   div: {
     display: "flex",
     gap: "2rem",
+    justifyContent: "center",
   },
 };
 
